@@ -91,6 +91,35 @@ namespace MoralisUITest
                 Console.WriteLine("Error occurred - {ex.Message}");
             }
         }
+
+        [Test]
+        public void TestLoginAndGetApiKey()
+        {
+            try
+            {
+                Login();
+
+                // Navigate to API Key section 
+                IWebElement apiKeyElement = driver.FindElement(By.CssSelector("input[data-testid='mui-input']"));
+                // Get the value attribute (API key)
+                string apiKey = apiKeyElement.GetAttribute("value");
+
+                // Output the API key
+                Console.WriteLine("API Key: " + apiKey);
+
+                Thread.Sleep(3000);
+
+                // Save API key to a JSON file
+                var json = new JObject();
+                json["apiKey"] = apiKey;
+                File.WriteAllText("apikey.json", json.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error occurred - {ex.Message}");
+            }
+        }
     }
 }
 
